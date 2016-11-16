@@ -2,14 +2,19 @@ package mx.com.ipn.ejemplograficos;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 public class EjemploGraficosActivity extends Activity {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,31 +22,41 @@ public class EjemploGraficosActivity extends Activity {
     }
 
     public class EjemploView extends View {
-        public EjemploView (Context context) {
+        private Drawable miImagen;
+
+        public EjemploView (Context context)
+        {
             super(context);
+            Resources res = context.getResources();
+            miImagen = res.getDrawable(R.drawable.quiero);
+            miImagen.setBounds(30,30,200,200);
+
         }
         @Override
         protected void onDraw(Canvas canvas) {
 
+            miImagen.draw(canvas);
+
 
             /*
-            *
-            int color;
-            color = Color.BLUE;                  //Azul opaco
-            color = Color.argb(127, 0, 255, 0);  //Verde transparente
-            color = 0x7F00FF00;                  //Verde transparente
-            color = getResources().getColor(R.color.color_Circulo);
-            *********** */
-
-
-
-
+            Path trazo = new Path();
+            trazo.addCircle(150, 150, 100, Path.Direction.CCW);
+            canvas.drawColor(Color.WHITE);
             Paint pincel = new Paint();
-            pincel.setColor(Color.argb(127,255,0,0));
+            pincel.setColor(Color.BLUE);
             pincel.setStrokeWidth(8);
             pincel.setStyle(Paint.Style.STROKE);
+            canvas.drawPath(trazo, pincel);
+            pincel.setStrokeWidth(1);
+            pincel.setStyle(Paint.Style.FILL);
+            pincel.setTextSize(20);
+            pincel.setTypeface(Typeface.SANS_SERIF);
+            canvas.drawTextOnPath("Desarrollo de aplicaciones para móviles con Android", trazo, 10, 40, pincel);
+            */
 
-            canvas.drawCircle(150, 150, 100, pincel);
+
+
+
         }
     }
 }
